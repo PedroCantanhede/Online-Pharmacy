@@ -1,17 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from '../user/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Product } from '../product/product.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Review {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, user => user.reviews)
-  user: User;
-
   @ManyToOne(() => Product, product => product.reviews)
   product: Product;
+
+  @ManyToOne(() => User, user => user.reviews)
+  user: User;
 
   @Column()
   rating: number;
@@ -19,6 +19,9 @@ export class Review {
   @Column()
   comment: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;
+
+  @UpdateDateColumn({ type: 'datetime' })
+  updatedAt: Date;
 }
