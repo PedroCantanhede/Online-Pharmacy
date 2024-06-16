@@ -6,9 +6,6 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, user => user.addresses)
-  user: User;
-
   @Column()
   street: string;
 
@@ -19,8 +16,11 @@ export class Address {
   state: string;
 
   @Column()
-  zip: string;
+  zipCode: string;
 
   @Column()
   country: string;
+
+  @ManyToOne(() => User, user => user.addresses)
+  user: User;
 }

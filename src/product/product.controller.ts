@@ -7,27 +7,46 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findAll() {
+    const products = await this.productService.findAll();
+    return {
+      message: 'Produtos encontrados com sucesso!',
+      data: products,
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.productService.findOne(id);
+  async findOne(@Param('id') id: number) {
+    const product = await this.productService.findOne(id);
+    return {
+      message: 'Produto encontrado com sucesso!',
+      data: product,
+    };
   }
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  async create(@Body() createProductDto: CreateProductDto) {
+    const product = await this.productService.create(createProductDto);
+    return {
+      message: 'Produto criado com sucesso!',
+      data: product,
+    };
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() updateProductDto: Partial<CreateProductDto>) {
-    return this.productService.update(id, updateProductDto);
+  async update(@Param('id') id: number, @Body() updateProductDto: Partial<CreateProductDto>) {
+    const product = await this.productService.update(id, updateProductDto);
+    return {
+      message: 'Produto atualizado com sucesso!',
+      data: product,
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.productService.remove(id);
+  async remove(@Param('id') id: number) {
+    await this.productService.remove(id);
+    return {
+      message: 'Produto deletado com sucesso!',
+    };
   }
 }
